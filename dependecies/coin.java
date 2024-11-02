@@ -18,6 +18,7 @@ public class coin {
         this.coinImage = cI;
         this.dX = dX;
         this.dY = dY;
+
     }
 
     public void ChangePos(int X,int Y){

@@ -1,5 +1,8 @@
 package dependecies;
+import java.applet.Applet;
 import java.awt.*;
+
+import javax.swing.JFrame;
 
 
 public class Rook extends coin{
