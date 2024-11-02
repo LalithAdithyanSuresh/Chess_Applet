@@ -3,41 +3,33 @@ package dependecies;
 import java.awt.*;
 
 public class player {
-    private String Name;
-    private boolean White;
+    private String name;
+    private boolean white;
     private int timeLeft;
-    private coin[] CoinsWon;
-    private int CoinWonCount;
+    private coin[] coinsWon;
+    private int coinWonCount;
     private clock Clock;
-    private Graphics g;
-    private int posX,posY,Height,width;
+    private int posX, posY, height, width;
 
-    public player(String name,boolean white,int totalTime,Graphics g,int posX,int posY,int Height,int width){
-        this.Name = name;
-        this.White = white;
+    public player(String name, boolean white, int totalTime, Component component, int posX, int posY, int height, int width) {
+        this.name = name;
+        this.white = white;
         this.timeLeft = totalTime;
-        this.CoinsWon = new coin[16];
-        this.CoinWonCount = 0;
-        this.g = g;
+        this.coinsWon = new coin[16];
+        this.coinWonCount = 0;
         this.posX = posX;
         this.posY = posY;
-        this.Height = Height;
+        this.height = height;
         this.width = width;
+        this.Clock = new clock(this.timeLeft, this.white, component, posX + (white ? width - 210 : 10), posY + (white ? height - 70 : 10));
     }
 
     // Printing Stats of the player in the assigned area
-    public void PrintPlayer(){
+    public void PrintPlayer(Graphics g) {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 32));
-        if(White){
-            g.drawString(this.Name, posX + 20, posY + 40);
-            Clock = new clock(this.timeLeft,this.White,g, posX + width - 210, posY + Height - 70);
-            
-        }else{
-            g.drawString(this.Name, width - g.getFontMetrics().stringWidth(this.Name) - 20, posY + Height - 40);
-            Clock = new clock(this.timeLeft,this.White,g, posX + 10, posY + 10);
-        }
-        Clock.DrawClock();
-        Clock.start();
+        g.drawString(this.name, (white ? posX + 20 : width - g.getFontMetrics().stringWidth(this.name) - 20), posY + (white ? 40 : height - 40));
+
+        Clock.DrawClock(g);
     }
 }

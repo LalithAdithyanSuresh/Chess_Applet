@@ -6,17 +6,19 @@ public class clock {
     private boolean White;
     private int timeLeft;
     private boolean active;
-    private Graphics g;
+    private Component component; 
     private int posX;
     private int posY;
-    private Integer M1,M2,S1,S2;
+    private Integer M1, M2, S1, S2;
     private Thread countdownThread; 
+    private final int width = 200; 
+    private final int height = 60; 
 
-    public clock(int TotalTime,boolean White,Graphics g,int posX,int posY){
+    public clock(int TotalTime, boolean White, Component component, int posX, int posY) {
         this.active = false;
         this.White = White;
         this.timeLeft = TotalTime;
-        this.g = g;
+        this.component = component; 
         this.posX = posX;
         this.posY = posY;
     }
@@ -29,16 +31,14 @@ public class clock {
                     Thread.sleep(1000);
                     timeLeft--;
                     System.out.println(timeLeft);
-                    // g.clearRect(posX, posY, 200, 60);
-                    DrawClock();
+                    component.repaint(posX, posY, width, height); 
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
             }
             if (timeLeft <= 0) {
                 active = false;
-                // g.clearRect(posX, posY, 200, 60);
-                DrawClock();
+                component.repaint(posX, posY, width, height); 
             }
         });
         countdownThread.start();
@@ -51,28 +51,26 @@ public class clock {
         }
     }
 
-    private void PrintTime(){
-        S1 = (timeLeft%60) /10;
-        S2 = (timeLeft%60) %10;
-        M1 = (timeLeft/60) /10;
-        M2 = (timeLeft/60) %10;
-        g.setColor(Color.WHITE);
-        if(timeLeft <=30)g.setColor(Color.red);
-        g.setFont(new Font("Arial", Font.BOLD, 32));
-        g.drawString(":", posX + (200 - g.getFontMetrics().stringWidth(":"))/2, posY + 40);
-        g.drawString(M1.toString(), posX + 20 + (30 - g.getFontMetrics().stringWidth(M1.toString()))/2, posY + 40);
-        g.drawString(M2.toString(), posX + 50 + (30 - g.getFontMetrics().stringWidth(M2.toString()))/2, posY + 40);
-        g.drawString(S1.toString(), posX + 120 + (30 - g.getFontMetrics().stringWidth(S1.toString()))/2, posY + 40);
-        g.drawString(S2.toString(), posX + 150 + (30 - g.getFontMetrics().stringWidth(S2.toString()))/2, posY + 40);
-        
+    public void DrawClock(Graphics g) {
+        g.setColor(Color.DARK_GRAY);
+        g.fillRoundRect(posX, posY, width, height, 10, 10);
+        g.setColor(Color.GRAY);
+        g.fillRoundRect(posX + 10, posY + 10, width - 20, height - 20, 10, 10);
+        PrintTime(g);
     }
 
-    // Printing Clock
-    public void DrawClock(){
-        g.setColor(Color.DARK_GRAY);
-        g.fillRoundRect(posX, posY,200, 60,10,10);
-        g.setColor(Color.gray);
-        g.fillRoundRect(posX+10, posY+10,180, 40,10,10);
-        PrintTime();
+    private void PrintTime(Graphics g) {
+        S1 = (timeLeft % 60) / 10;
+        S2 = (timeLeft % 60) % 10;
+        M1 = (timeLeft / 60) / 10;
+        M2 = (timeLeft / 60) % 10;
+        g.setColor(Color.WHITE);
+        if (timeLeft <= 30) g.setColor(Color.RED);
+        g.setFont(new Font("Arial", Font.BOLD, 32));
+        g.drawString(":", posX + (width - g.getFontMetrics().stringWidth(":")) / 2, posY + 40);
+        g.drawString(M1.toString(), posX + 20 + (30 - g.getFontMetrics().stringWidth(M1.toString())) / 2, posY + 40);
+        g.drawString(M2.toString(), posX + 50 + (30 - g.getFontMetrics().stringWidth(M2.toString())) / 2, posY + 40);
+        g.drawString(S1.toString(), posX + 120 + (30 - g.getFontMetrics().stringWidth(S1.toString())) / 2, posY + 40);
+        g.drawString(S2.toString(), posX + 150 + (30 - g.getFontMetrics().stringWidth(S2.toString())) / 2, posY + 40);
     }
 }
