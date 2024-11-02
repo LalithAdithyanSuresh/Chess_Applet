@@ -22,6 +22,7 @@ public class player {
         this.height = height;
         this.width = width;
         this.Clock = new clock(this.timeLeft, this.white, component, posX + (white ? width - 210 : 10), posY + (white ? height - 70 : 10));
+        Clock.start();
     }
 
     // Printing Stats of the player in the assigned area
@@ -29,7 +30,6 @@ public class player {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 32));
         g.drawString(this.name, (white ? posX + 20 : width - g.getFontMetrics().stringWidth(this.name) - 20), posY + (white ? 40 : height - 40));
-
         Clock.DrawClock(g);
     }
 }

@@ -52,7 +52,12 @@ public class clock {
     }
 
     public void DrawClock(Graphics g) {
-        g.setColor(Color.DARK_GRAY);
+        if(active){
+            g.setColor(Color.yellow);
+        }else{
+            g.setColor(Color.red);
+
+        }
         g.fillRoundRect(posX, posY, width, height, 10, 10);
         g.setColor(Color.GRAY);
         g.fillRoundRect(posX + 10, posY + 10, width - 20, height - 20, 10, 10);
