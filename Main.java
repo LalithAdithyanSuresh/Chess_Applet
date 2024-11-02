@@ -10,7 +10,7 @@ public class Main extends Applet{
     // Game Settings
     int TotalTime = 600;
 
-
+    // Game Objects
     board Board;
     player Player1;
     player Player2;
@@ -19,15 +19,16 @@ public class Main extends Applet{
     public void init() {
         setSize(800, 1200);
         setName("Chess Game");
-        Player1 = new player(JOptionPane.showInputDialog(this, "Please enter Name of PLAYER 1 :"),true,TotalTime);
-        Player2 = new player(JOptionPane.showInputDialog(this, "Please enter Name of PLAYER 2 :"),false,TotalTime);
 
+        // Initiealizing Game Objects
         Board = new board();
     }
     public void paint(Graphics g) 
     {
         Board.DrawBoard(g, Color.black, Color.gray, 0, 200, 100);
-        Player1.PrintPlayer(g,0,0,200,800);
-        Player2.PrintPlayer(g,0,1000,200,800);
+        Player1 = new player(JOptionPane.showInputDialog(this, "Please enter Name of PLAYER 1 :"),true,TotalTime,g,0,0,200,800);
+        Player2 = new player(JOptionPane.showInputDialog(this, "Please enter Name of PLAYER 2 :"),false,TotalTime,g,0,1000,200,800);
+        Player1.PrintPlayer();
+        Player2.PrintPlayer();
     }
 } 
