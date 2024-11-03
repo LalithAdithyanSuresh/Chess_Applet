@@ -2,7 +2,7 @@
 
 Welcome to the **Chess Game** written in Java 1.8! This project is a fully functional chess game that showcases object-oriented programming principles, complete with an interactive GUI. 
 
-![Game](/images/AttackMove.png)
+<img src="/images/AttackMove.png" width="300px" alt="GamePlay">
 
 ## Features
 
@@ -11,6 +11,23 @@ Welcome to the **Chess Game** written in Java 1.8! This project is a fully funct
 - Allows two-player gameplay with visual representation of captured pieces.
 - Interactive and dynamic graphics rendering.
 - Clock feature for timed gameplay.
+
+## Images
+### Startup
+<div style="displat:flex;flex-direction:row;">
+   <img src="/images/Player1Start.png" width="300px" alt="GamePlay">
+   <img src="/images/Player2Start.png" width="300px" alt="GamePlay">
+</div>
+
+### Mid Game
+<div style="displat:flex;flex-direction:row;">
+   <img src="/images/StartScreen.png" width="300px" alt="GamePlay">
+   <img src="/images/FirstMove.png" width="300px" alt="GamePlay">
+   <img src="/images/AttackMove.png" width="300px" alt="GamePlay">
+</div>
+
+### Game End
+<img src="/images/VictoryScreen.png" width="300px" alt="GamePlay">
 
 ## Prerequisites
 
@@ -27,5 +44,6 @@ To run this project, make sure you have **Java Development Kit (JDK) 1.8** insta
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/yourrepository.git
-   cd yourrepository
+   git clone https://github.com/LalithAdithyanSuresh/Chess_Applet.git
+   cd Chess_Applet
+   python CompileAndRun.py
