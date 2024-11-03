@@ -2,7 +2,7 @@
 
 Welcome to the **Chess Game** written in Java 1.8! This project is a fully functional chess game that showcases object-oriented programming principles, complete with an interactive GUI. 
 
-![Game](/images/AttackMove.pngg)
+![Game](/images/AttackMove.png)
 
 ## Features
 
