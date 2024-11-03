@@ -348,7 +348,7 @@ public class Main extends JFrame implements MouseListener {
                 }
                 // Bottom Right
                 for(int i=1;i<8;i++){
-                    if(x+i <8 && y+1 <8){
+                    if(x+i <8 && y+i <8){
                         if(COB[x+i][y+i] != null){
                             if(COB[x+i][y+i].White ^ CurrentWhite){
                                 CoinClick[x+i][y+i] = 2;
@@ -459,7 +459,7 @@ public class Main extends JFrame implements MouseListener {
                 }
                 // Bottom Right
                 for(int i=1;i<8;i++){
-                    if(x+i <8 && y+1 <8){
+                    if(x+i <8 && y+i <8){
                         if(COB[x+i][y+i] != null){
                             if(COB[x+i][y+i].White ^ CurrentWhite){
                                 CoinClick[x+i][y+i] = 2;
@@ -473,7 +473,9 @@ public class Main extends JFrame implements MouseListener {
                 }
             }
             // Knight Movement
-        
+            if(COB[x][y].type.equals("knight")){
+                
+            }
         }
     }
 

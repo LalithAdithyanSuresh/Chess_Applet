@@ -47,7 +47,7 @@ public class board{
                     g.fillRect(posX + (100 * i), posY + (100*j), 100,100);
                 }else if(CoinClick[i][j] == 3 ){
                     g.setColor(new Color(255, 255, 0, 90));
-                    g.fillRect(posX + (100 * i), posY + (100*j), 100,100);
+                    g.fillOval(posX + 35 + (100 * i), posY + 35 +(100*j), 30,30);
                 }
             }
         }
