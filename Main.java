@@ -14,6 +14,8 @@ public class Main extends JFrame implements MouseListener {
     private board Board;
     private Image[] pieces;
     private coin[][] COB;
+    private int[][] CoinClick;
+    private boolean choosen;
     private player Player1;
     private player Player2;
 
@@ -23,7 +25,7 @@ public class Main extends JFrame implements MouseListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addMouseListener(this);
         loadImages();
-
+        choosen = false;
         // Get player names and initialize objects
         String player1Name = JOptionPane.showInputDialog(this, "Please enter Name of PLAYER 1:");
         String player2Name = JOptionPane.showInputDialog(this, "Please enter Name of PLAYER 2:");
@@ -33,6 +35,7 @@ public class Main extends JFrame implements MouseListener {
         Player2 = new player(player2Name, false, totalTime, this, 0, 1050, 200, 800);
 
         COB = new coin[8][8];
+        CoinClick = new int[8][8];
 
         // Initializing Coins
         COB[0][0] = new coin(false,0,0,pieces[5],0,250,"rook");
@@ -116,10 +119,10 @@ public class Main extends JFrame implements MouseListener {
     public void paint(Graphics g) {
         super.paint(g);
         Board.DrawBoard(g, Color.darkGray, Color.gray, 0, 250, 100);
+        Board.DrawHiglights(g,CoinClick);
         // Draw players
         Player1.PrintPlayer(g);
         Player2.PrintPlayer(g);
-
         drawPieces(g);
     }
 
@@ -142,7 +145,19 @@ public class Main extends JFrame implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
-        System.out.println("Mouse clicked at (" + x + ", " + y + ")");
+        if(choosen){
+            choosen = false;
+            CoinClick = new int[8][8];
+        }
+        if(x<=800 && x>=0 && y>=250 &&y<=1050){
+            x = x/100;
+            y = (y-250)/100;
+            if(COB[x][y] != null){
+                CoinClick[x][y] = 1;
+                repaint();
+            }
+            choosen = true;
+        }
     }
 
     @Override

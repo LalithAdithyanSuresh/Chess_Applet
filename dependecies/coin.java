@@ -4,13 +4,13 @@ import java.applet.*;
 import java.awt.*;
 
 public class coin {
-    private boolean White;
+    public boolean White;
     private int X;
     private int Y;
     private int dX;
     private int dY;
     private Image coinImage;
-    private String type;
+    public String type;
 
     public coin(boolean white,int x,int y,Image cI,int dX,int dY,String Type){
         this.White = white;

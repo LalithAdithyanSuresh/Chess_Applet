@@ -30,7 +30,6 @@ public class clock {
                 try {
                     Thread.sleep(1000);
                     timeLeft--;
-                    System.out.println(timeLeft);
                     component.repaint(posX, posY, width, height); 
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -52,12 +51,7 @@ public class clock {
     }
 
     public void DrawClock(Graphics g) {
-        if(active){
-            g.setColor(Color.yellow);
-        }else{
-            g.setColor(Color.red);
-
-        }
+        g.setColor((active ? Color.yellow : Color.darkGray));
         g.fillRoundRect(posX, posY, width, height, 10, 10);
         g.setColor(Color.GRAY);
         g.fillRoundRect(posX + 10, posY + 10, width - 20, height - 20, 10, 10);
