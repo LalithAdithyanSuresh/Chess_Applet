@@ -1,6 +1,5 @@
 package dependecies;
 
-import java.applet.*;
 import java.awt.*;
 
 public class coin {
@@ -21,15 +20,18 @@ public class coin {
         this.dY = dY;
         this.type = Type;
     }
+
+    // Another constructor to create a new coin
     public coin(coin other) {
         this.White = other.White;
         this.X = other.X;
         this.Y = other.Y;
         this.dX = other.dX;
         this.dY = other.dY;
-        this.coinImage = other.coinImage; // Shallow copy, adjust if deep copy of Image is needed
-        this.type = new String(other.type); // Creates a new instance of the string
+        this.coinImage = other.coinImage; 
+        this.type = new String(other.type); 
     }
+    // To draw coin in the grid
     public void drawCoin(Graphics g){
         g.drawImage(coinImage, dX + ((X)*100), dY + ((Y)*100),100,100, null);
     }

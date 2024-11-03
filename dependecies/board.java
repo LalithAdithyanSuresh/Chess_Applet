@@ -17,7 +17,8 @@ public class board{
             white = true;
         }
     }
-
+    
+    // To draw the checkered board
     public void DrawBoard(Graphics g,Color a,Color b, int posX,int posY,int size){
         this.posX = posX;
         this.posY = posY;
@@ -36,6 +37,7 @@ public class board{
             colorSwitch();
         }
     }
+    // To draw possible moves nd current selected piece
     public void DrawHiglights(Graphics g,int[][] CoinClick) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {

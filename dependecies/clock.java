@@ -3,7 +3,6 @@ package dependecies;
 import java.awt.*;
 
 public class clock {
-    private boolean White;
     public int timeLeft;
     private boolean active;
     private Component component; 
@@ -16,13 +15,13 @@ public class clock {
 
     public clock(int TotalTime, boolean White, Component component, int posX, int posY) {
         this.active = false;
-        this.White = White;
         this.timeLeft = TotalTime;
         this.component = component; 
         this.posX = posX;
         this.posY = posY;
     }
 
+    // Start clock countdown
     public void start() {
         this.active = true;
         countdownThread = new Thread(() -> {
@@ -43,6 +42,7 @@ public class clock {
         countdownThread.start();
     }
 
+    // Pause clock countdown
     public void stop() {
         this.active = false;
         if (countdownThread != null) {
@@ -50,6 +50,7 @@ public class clock {
         }
     }
 
+    // To draw the clock backgound
     public void DrawClock(Graphics g) {
         g.setColor((active ? Color.yellow : Color.darkGray));
         g.fillRoundRect(posX, posY, width, height, 10, 10);
@@ -57,7 +58,7 @@ public class clock {
         g.fillRoundRect(posX + 10, posY + 10, width - 20, height - 20, 10, 10);
         PrintTime(g);
     }
-
+    // To display timeleft as seperate integers
     private void PrintTime(Graphics g) {
         S1 = (timeLeft % 60) / 10;
         S2 = (timeLeft % 60) % 10;

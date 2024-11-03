@@ -4,8 +4,23 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-
 import dependecies.*;
+
+/*
+ * Chess Game using applet and swing
+ * 
+ * CIA - 2 for OOPs Course
+ * 
+ * Team Members
+ *      - Lalith Adithyan S (23011101071)
+ *      - Kesavram VS (23011101065)
+ *      - N Sanjivan (23011101082)
+ * 
+ * Modules - worked By
+ *  GUI and framework                   - Lalith Adithyan S
+ *  Game Logic (coin movements)         - Sanjivan N
+ *  Assets, Countdown and Integration   - Kesavram VS
+ */
 public class Main extends JFrame implements MouseListener {
     // Game Settings
     private int totalTime = 45;
@@ -123,7 +138,7 @@ public class Main extends JFrame implements MouseListener {
             e.printStackTrace();
         }
     }
-
+    // Main Paint Function
     public void paint(Graphics g) {
         super.paint(g);
         Board.DrawBoard(g, Color.darkGray, Color.gray, 0, 250, 100);
@@ -132,12 +147,15 @@ public class Main extends JFrame implements MouseListener {
         Player1.PrintPlayer(g);
         Player2.PrintPlayer(g);
         drawPieces(g);
+
+        // Start Button
         if(!Start){
             g.setColor(Color.GREEN);
             g.fillRect(300, 600, 200, 100);
             g.setColor(Color.BLACK);
             g.drawString("START", 400 - g.getFontMetrics().stringWidth("START") / 2, 660);
         }
+        // GameOver Screen
         if(gameOver != 0 || Player1.Clock.timeLeft<=0 || Player2.Clock.timeLeft <= 0){
             Player1.Clock.stop();
             Player2.Clock.stop();
@@ -200,7 +218,7 @@ public class Main extends JFrame implements MouseListener {
     }
 
 
-
+    // Handeling Piec Movements
     private void movePiece(int x,int y){
         coin temp = new coin(COB[choosenCords[0]][choosenCords[1]]);
         if(COB[x][y] != null && COB[x][y].type.equals("king")){
@@ -213,7 +231,7 @@ public class Main extends JFrame implements MouseListener {
         choosen = false;
     }
 
-
+    // Validating Moves
     private void possibleMovements(int x,int y){
         if(COB[x][y] != null){
             // Rook  Movement
