@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class clock {
     private boolean White;
-    private int timeLeft;
+    public int timeLeft;
     private boolean active;
     private Component component; 
     private int posX;

@@ -14,7 +14,7 @@ public class Main extends JFrame implements MouseListener {
     private board Board;
     private Image[] pieces;
     private coin[][] COB;
-    private int gameOver;
+    public int gameOver;
     private int[][] CoinClick;
     private boolean choosen;
     private player Player1;
@@ -49,8 +49,8 @@ public class Main extends JFrame implements MouseListener {
         COB[0][0] = new coin(false,0,0,pieces[5],0,250,"rook");
         COB[1][0] = new coin(false,1,0,pieces[2],0,250,"knight");
         COB[2][0] = new coin(false,2,0,pieces[0],0,250,"bishop");
-        COB[3][0] = new coin(false,3,0,pieces[1],0,250,"king");
-        COB[4][0] = new coin(false,4,0,pieces[4],0,250,"queen");
+        COB[3][0] = new coin(false,3,0,pieces[4],0,250,"queen");
+        COB[4][0] = new coin(false,4,0,pieces[1],0,250,"king");
         COB[5][0] = new coin(false,5,0,pieces[0],0,250,"bishop");
         COB[6][0] = new coin(false,6,0,pieces[2],0,250,"knight");
         COB[7][0] = new coin(false,7,0,pieces[5],0,250,"rook");
@@ -58,8 +58,8 @@ public class Main extends JFrame implements MouseListener {
         COB[0][7] = new coin(true,0,7,pieces[11],0,250,"rook");
         COB[1][7] = new coin(true,1,7,pieces[8],0,250,"knight");
         COB[2][7] = new coin(true,2,7,pieces[6],0,250,"bishop");
-        COB[3][7] = new coin(true,3,7,pieces[7],0,250,"king");
-        COB[4][7] = new coin(true,4,7,pieces[10],0,250,"queen");
+        COB[3][7] = new coin(true,3,7,pieces[10],0,250,"queen");
+        COB[4][7] = new coin(true,4,7,pieces[7],0,250,"king");
         COB[5][7] = new coin(true,5,7,pieces[6],0,250,"bishop");
         COB[6][7] = new coin(true,6,7,pieces[8],0,250,"knight");
         COB[7][7] = new coin(true,7,7,pieces[11],0,250,"rook");
@@ -138,8 +138,22 @@ public class Main extends JFrame implements MouseListener {
             g.setColor(Color.BLACK);
             g.drawString("START", 400 - g.getFontMetrics().stringWidth("START") / 2, 660);
         }
-        if(gameOver != 0){
-            
+        if(gameOver != 0 || Player1.Clock.timeLeft<=0 || Player2.Clock.timeLeft <= 0){
+            Player1.Clock.stop();
+            Player2.Clock.stop();
+            g.setColor(Color.WHITE);
+            g.fillRoundRect(300, 550, 200, 200,10,10);
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setColor(Color.GREEN);
+            g2.setStroke(new BasicStroke(10));
+            g2.drawRoundRect(300, 550, 200, 200, 10, 10);
+            g.setColor(Color.BLACK);
+            if(gameOver ==1 || Player2.Clock.timeLeft <=0){
+                g.drawString(Player1.name, 400 - g.getFontMetrics().stringWidth(Player1.name) / 2, 600);
+            }else{
+                g.drawString(Player2.name, 400 - g.getFontMetrics().stringWidth(Player2.name) / 2, 600);
+            }
+            g.drawString("WON !", 400 - g.getFontMetrics().stringWidth("WON !") / 2, 690);
         }
     }
 
@@ -189,7 +203,7 @@ public class Main extends JFrame implements MouseListener {
 
     private void movePiece(int x,int y){
         coin temp = new coin(COB[choosenCords[0]][choosenCords[1]]);
-        if(COB[x][y].type.equals("king")){
+        if(COB[x][y] != null && COB[x][y].type.equals("king")){
             gameOver = CurrentWhite ? 2 : 1;
         }
         temp.X = x;

@@ -3,7 +3,7 @@ package dependecies;
 import java.awt.*;
 
 public class player {
-    private String name;
+    public String name;
     private boolean white;
     private int timeLeft;
     public coin[] coinsWon;
