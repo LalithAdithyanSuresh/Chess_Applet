@@ -18,6 +18,7 @@ public class Main extends JFrame implements MouseListener {
     private boolean choosen;
     private player Player1;
     private player Player2;
+    private boolean CurrentWhite;
 
     public Main() {
         setSize(800, 1300);
@@ -26,6 +27,7 @@ public class Main extends JFrame implements MouseListener {
         addMouseListener(this);
         loadImages();
         choosen = false;
+        CurrentWhite = true;
         // Get player names and initialize objects
         String player1Name = JOptionPane.showInputDialog(this, "Please enter Name of PLAYER 1:");
         String player2Name = JOptionPane.showInputDialog(this, "Please enter Name of PLAYER 2:");
@@ -47,6 +49,7 @@ public class Main extends JFrame implements MouseListener {
         COB[6][0] = new coin(false,6,0,pieces[2],0,250,"knight");
         COB[7][0] = new coin(false,7,0,pieces[5],0,250,"rook");
 
+        COB[3][4] = new coin(false,3,4,pieces[11],0,250,"rook");
         COB[0][7] = new coin(false,0,7,pieces[11],0,250,"rook");
         COB[1][7] = new coin(false,1,7,pieces[8],0,250,"knight");
         COB[2][7] = new coin(false,2,7,pieces[6],0,250,"bishop");
@@ -137,14 +140,7 @@ public class Main extends JFrame implements MouseListener {
         }
     }
 
-
-
-
-
-
-    public void mouseClicked(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
+    private void CheckCoinClick(int x, int y){
         if(choosen){
             choosen = false;
             CoinClick = new int[8][8];
@@ -154,10 +150,86 @@ public class Main extends JFrame implements MouseListener {
             y = (y-250)/100;
             if(COB[x][y] != null){
                 CoinClick[x][y] = 1;
+                choosen = true;
+                possibleMovements(x, y);
                 repaint();
             }
-            choosen = true;
         }
+    }
+
+
+
+
+
+
+    private void possibleMovements(int x,int y){
+        if(COB[x][y] != null){
+            // Rook  Movement
+            if(COB[x][y].type.equals("rook")){
+                // Right Movement
+                for(int i=x+1;i<8;i++){
+                    if(COB[i][y] != null){
+                        if(!(COB[i][y].White && CurrentWhite)){
+                            CoinClick[i][y] = 2;
+                            break;
+                        }else {
+                            break;
+                        }
+                    }else{
+                        CoinClick[i][y] = 3;
+                    }
+                }
+                // Left Movement
+                for(int i=x-1;i>=0;i--){
+                    if(COB[i][y] != null){
+                        if(!(COB[i][y].White && CurrentWhite)){
+                            CoinClick[i][y] = 2;
+                            break;
+                        }else {
+                            break;
+                        }
+                    }else{
+                        CoinClick[i][y] = 3;
+                    }
+                }
+                // Up Movement
+                for(int i=y-1;i>=0;i--){
+                    if(COB[x][i] != null){
+                        if(!(COB[x][i].White && CurrentWhite)){
+                            CoinClick[x][i] = 2;
+                            break;
+                        }else {
+                            break;
+                        }
+                    }else{
+                        CoinClick[x][i] = 3;
+                    }
+                }
+                // Down Movment
+                for(int i=y+1;i<8;i++){
+                    if(COB[x][i] != null){
+                        if(!(COB[x][i].White && CurrentWhite)){
+                            CoinClick[x][i] = 2;
+                            break;
+                        }else {
+                            break;
+                        }
+                    }else{
+                        CoinClick[x][i] = 3;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+    public void mouseClicked(MouseEvent e) {
+        int x = e.getX();
+        int y = e.getY();
+        CheckCoinClick(x, y);
+        
     }
 
     @Override

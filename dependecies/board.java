@@ -39,8 +39,14 @@ public class board{
     public void DrawHiglights(Graphics g,int[][] CoinClick) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (CoinClick[i][j] != 0) {
+                if (CoinClick[i][j] == 1) {
                     g.setColor(new Color(0, 255, 0, 128));
+                    g.fillRect(posX + (100 * i), posY + (100*j), 100,100);
+                }else if(CoinClick[i][j] == 2){
+                    g.setColor(new Color(255, 0, 0, 90));
+                    g.fillRect(posX + (100 * i), posY + (100*j), 100,100);
+                }else if(CoinClick[i][j] == 3 ){
+                    g.setColor(new Color(255, 255, 0, 90));
                     g.fillRect(posX + (100 * i), posY + (100*j), 100,100);
                 }
             }
