@@ -14,6 +14,7 @@ public class Main extends JFrame implements MouseListener {
     private board Board;
     private Image[] pieces;
     private coin[][] COB;
+    private int gameOver;
     private int[][] CoinClick;
     private boolean choosen;
     private player Player1;
@@ -21,7 +22,8 @@ public class Main extends JFrame implements MouseListener {
     private boolean CurrentWhite;
     private boolean Start;
     private int[] choosenCords;
-
+    int[] Kmoves = new int[]{1,0,-1}; //King Moves
+    int[] qw = new int[]{-2,-1,1,2}; //Knight Moves
     public Main() {
         setSize(800, 1300);
         setTitle("Chess Game");
@@ -29,6 +31,7 @@ public class Main extends JFrame implements MouseListener {
         addMouseListener(this);
         loadImages();
         choosen = false;
+        
         CurrentWhite = true;
         // Get player names and initialize objects
         String player1Name = JOptionPane.showInputDialog(this, "Please enter Name of PLAYER 1:");
@@ -135,6 +138,9 @@ public class Main extends JFrame implements MouseListener {
             g.setColor(Color.BLACK);
             g.drawString("START", 400 - g.getFontMetrics().stringWidth("START") / 2, 660);
         }
+        if(gameOver != 0){
+            
+        }
     }
 
 
@@ -183,15 +189,14 @@ public class Main extends JFrame implements MouseListener {
 
     private void movePiece(int x,int y){
         coin temp = new coin(COB[choosenCords[0]][choosenCords[1]]);
+        if(COB[x][y].type.equals("king")){
+            gameOver = CurrentWhite ? 2 : 1;
+        }
         temp.X = x;
         temp.Y = y;
 
-        // Remove the piece from the original position
         COB[choosenCords[0]][choosenCords[1]] = null;
-
-        // Check if there's an opponent's piece to capture
         if (COB[x][y] != null) {
-            // Capture logic: Add the captured coin to the appropriate player's collection
             if (CurrentWhite) {
                 Player2.coinsWon[Player2.coinWonCount] = new coin(COB[x][y]);
                 Player2.coinWonCount++;
@@ -201,10 +206,7 @@ public class Main extends JFrame implements MouseListener {
             }
         }
 
-        // Place the piece in the new position
         COB[x][y] = temp;
-
-        // Reset the chosen state
         choosen = false;
     }
 
@@ -474,8 +476,39 @@ public class Main extends JFrame implements MouseListener {
             }
             // Knight Movement
             if(COB[x][y].type.equals("knight")){
-                
+                for (int i : qw) {
+                    for (int j : qw) {
+                        if(i!=j && i+j != 0){
+                            if(x+i <8 && x+i >=0 && y+j < 8 && y+j >=0){
+                                if(COB[x+i][y+j] !=null){
+                                    if(COB[x+i][y+j].White ^ CurrentWhite){
+                                        CoinClick[x+i][y+j] = 2;
+                                    }
+                                }else{
+                                    CoinClick[x+i][y+j] = 3;
+                                }
+                            }
+                        }
+                    }
+                }
             }
+            // King Movement
+            if(COB[x][y].type.equals("king")){
+                for (int i : Kmoves) {
+                    for (int j : Kmoves) {
+                        if(x+i >= 0 && x+i<8 && y+j>=0 && y+j<8){
+                            if(COB[x+i][y+j] != null){
+                                if(COB[x+i][y+j].White ^ CurrentWhite){
+                                    CoinClick[x+i][y+j] = 2;
+                                }
+                            }else{
+                                CoinClick[x+i][y+j] = 3;
+                            }
+                        }
+                    }
+                }
+            }
+        
         }
     }
 
