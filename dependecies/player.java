@@ -6,8 +6,6 @@ public class player {
     public String name;
     private boolean white;
     private int timeLeft;
-    public coin[] coinsWon;
-    public int coinWonCount;
     public clock Clock;
     private int posX, posY, height, width;
 
@@ -15,8 +13,6 @@ public class player {
         this.name = name;
         this.white = white;
         this.timeLeft = totalTime;
-        this.coinsWon = new coin[16];
-        this.coinWonCount = 0;
         this.posX = posX;
         this.posY = posY;
         this.height = height;

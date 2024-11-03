@@ -208,18 +208,7 @@ public class Main extends JFrame implements MouseListener {
         }
         temp.X = x;
         temp.Y = y;
-
         COB[choosenCords[0]][choosenCords[1]] = null;
-        if (COB[x][y] != null) {
-            if (CurrentWhite) {
-                Player2.coinsWon[Player2.coinWonCount] = new coin(COB[x][y]);
-                Player2.coinWonCount++;
-            } else {
-                Player1.coinsWon[Player1.coinWonCount] = new coin(COB[x][y]);
-                Player1.coinWonCount++;
-            }
-        }
-
         COB[x][y] = temp;
         choosen = false;
     }
