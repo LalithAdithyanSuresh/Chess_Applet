@@ -50,14 +50,14 @@ public class Main extends JFrame implements MouseListener {
         COB[6][0] = new coin(false,6,0,pieces[2],0,250,"knight");
         COB[7][0] = new coin(false,7,0,pieces[5],0,250,"rook");
 
-        COB[0][7] = new coin(false,0,7,pieces[11],0,250,"rook");
-        COB[1][7] = new coin(false,1,7,pieces[8],0,250,"knight");
-        COB[2][7] = new coin(false,2,7,pieces[6],0,250,"bishop");
-        COB[3][7] = new coin(false,3,7,pieces[7],0,250,"king");
-        COB[4][7] = new coin(false,4,7,pieces[10],0,250,"queen");
-        COB[5][7] = new coin(false,5,7,pieces[6],0,250,"bishop");
-        COB[6][7] = new coin(false,6,7,pieces[8],0,250,"knight");
-        COB[7][7] = new coin(false,7,7,pieces[11],0,250,"rook");
+        COB[0][7] = new coin(true,0,7,pieces[11],0,250,"rook");
+        COB[1][7] = new coin(true,1,7,pieces[8],0,250,"knight");
+        COB[2][7] = new coin(true,2,7,pieces[6],0,250,"bishop");
+        COB[3][7] = new coin(true,3,7,pieces[7],0,250,"king");
+        COB[4][7] = new coin(true,4,7,pieces[10],0,250,"queen");
+        COB[5][7] = new coin(true,5,7,pieces[6],0,250,"bishop");
+        COB[6][7] = new coin(true,6,7,pieces[8],0,250,"knight");
+        COB[7][7] = new coin(true,7,7,pieces[11],0,250,"rook");
 
         COB[0][6] = new coin(true,0,6,pieces[9],0,250,"pawn");
         COB[1][6] = new coin(true,1,6,pieces[9],0,250,"pawn");
@@ -149,6 +149,13 @@ public class Main extends JFrame implements MouseListener {
                 if(CoinClick[x][y] == 2 || CoinClick[x][y] ==3){
                     movePiece(x,y);
                     CurrentWhite = CurrentWhite ? false :true;
+                    if(CurrentWhite){
+                        Player2.Clock.start();
+                        Player1.Clock.stop();
+                    }else{
+                        Player1.Clock.start();
+                        Player2.Clock.stop();
+                    }
                 }
                 CoinClick = new int[8][8];
             }

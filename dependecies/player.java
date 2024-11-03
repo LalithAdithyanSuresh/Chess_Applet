@@ -8,7 +8,7 @@ public class player {
     private int timeLeft;
     public coin[] coinsWon;
     public int coinWonCount;
-    private clock Clock;
+    public clock Clock;
     private int posX, posY, height, width;
 
     public player(String name, boolean white, int totalTime, Component component, int posX, int posY, int height, int width) {
