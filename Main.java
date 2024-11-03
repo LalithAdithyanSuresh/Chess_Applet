@@ -19,6 +19,7 @@ public class Main extends JFrame implements MouseListener {
     private player Player1;
     private player Player2;
     private boolean CurrentWhite;
+    private int[] choosenCords;
 
     public Main() {
         setSize(800, 1300);
@@ -49,7 +50,6 @@ public class Main extends JFrame implements MouseListener {
         COB[6][0] = new coin(false,6,0,pieces[2],0,250,"knight");
         COB[7][0] = new coin(false,7,0,pieces[5],0,250,"rook");
 
-        COB[3][4] = new coin(false,3,4,pieces[11],0,250,"rook");
         COB[0][7] = new coin(false,0,7,pieces[11],0,250,"rook");
         COB[1][7] = new coin(false,1,7,pieces[8],0,250,"knight");
         COB[2][7] = new coin(false,2,7,pieces[6],0,250,"bishop");
@@ -141,25 +141,57 @@ public class Main extends JFrame implements MouseListener {
     }
 
     private void CheckCoinClick(int x, int y){
-        if(choosen){
-            choosen = false;
-            CoinClick = new int[8][8];
-        }
         if(x<=800 && x>=0 && y>=250 &&y<=1050){
             x = x/100;
             y = (y-250)/100;
-            if(COB[x][y] != null){
-                CoinClick[x][y] = 1;
-                choosen = true;
-                possibleMovements(x, y);
-                repaint();
+            if(choosen){
+                choosen = false;
+                if(CoinClick[x][y] == 2 || CoinClick[x][y] ==3){
+                    movePiece(x,y);
+                    CurrentWhite = CurrentWhite ? false :true;
+                }
+                CoinClick = new int[8][8];
             }
+            if(COB[x][y] != null){
+                if(CurrentWhite == COB[x][y].White){
+                    CoinClick[x][y] = 1;
+                    choosen = true;
+                    choosenCords = new int[]{x,y};
+                    possibleMovements(x, y);
+                }
+            }
+            repaint();
         }
     }
 
 
 
+    private void movePiece(int x,int y){
+        coin temp = new coin(COB[choosenCords[0]][choosenCords[1]]);
+        temp.X = x;
+        temp.Y = y;
 
+        // Remove the piece from the original position
+        COB[choosenCords[0]][choosenCords[1]] = null;
+
+        // Check if there's an opponent's piece to capture
+        if (COB[x][y] != null) {
+            // Capture logic: Add the captured coin to the appropriate player's collection
+            if (CurrentWhite) {
+                Player2.coinsWon[Player2.coinWonCount] = new coin(COB[x][y]);
+                Player2.coinWonCount++;
+            } else {
+                Player1.coinsWon[Player1.coinWonCount] = new coin(COB[x][y]);
+                Player1.coinWonCount++;
+            }
+        }
+
+        // Place the piece in the new position
+        COB[x][y] = temp;
+
+        // Reset the chosen state
+        choosen = false;
+    }
 
 
     private void possibleMovements(int x,int y){
@@ -169,7 +201,7 @@ public class Main extends JFrame implements MouseListener {
                 // Right Movement
                 for(int i=x+1;i<8;i++){
                     if(COB[i][y] != null){
-                        if(!(COB[i][y].White && CurrentWhite)){
+                        if((COB[i][y].White ^ CurrentWhite)){
                             CoinClick[i][y] = 2;
                             break;
                         }else {
@@ -182,7 +214,7 @@ public class Main extends JFrame implements MouseListener {
                 // Left Movement
                 for(int i=x-1;i>=0;i--){
                     if(COB[i][y] != null){
-                        if(!(COB[i][y].White && CurrentWhite)){
+                        if((COB[i][y].White ^ CurrentWhite)){
                             CoinClick[i][y] = 2;
                             break;
                         }else {
@@ -195,7 +227,7 @@ public class Main extends JFrame implements MouseListener {
                 // Up Movement
                 for(int i=y-1;i>=0;i--){
                     if(COB[x][i] != null){
-                        if(!(COB[x][i].White && CurrentWhite)){
+                        if((COB[x][i].White ^ CurrentWhite)){
                             CoinClick[x][i] = 2;
                             break;
                         }else {
@@ -208,7 +240,7 @@ public class Main extends JFrame implements MouseListener {
                 // Down Movment
                 for(int i=y+1;i<8;i++){
                     if(COB[x][i] != null){
-                        if(!(COB[x][i].White && CurrentWhite)){
+                        if((COB[x][i].White ^ CurrentWhite)){
                             CoinClick[x][i] = 2;
                             break;
                         }else {
@@ -216,6 +248,42 @@ public class Main extends JFrame implements MouseListener {
                         }
                     }else{
                         CoinClick[x][i] = 3;
+                    }
+                }
+            }
+            // Pawn Movement
+            if(COB[x][y].type.equals("pawn")){
+                if(COB[x][y].White){
+                    // Single Step
+                    if(y-1 >= 0 && COB[x][y-1] == null){
+                        CoinClick[x][y-1] = 3;
+                    }
+                    // Double step
+                    if(y == 6 && COB[x][y-2] ==null){
+                        CoinClick[x][y-2] = 3;
+                    }
+                    // Diagonal Hits
+                    if(x-1 >=0 && y-1 >=0 && COB[x-1][y-1] != null && (COB[x-1][y-1].White ^ CurrentWhite)){
+                        CoinClick[x-1][y-1] = 2;
+                    }
+                    if(x+1 <8 && y-1 >=0 && COB[x+1][y-1] != null && (COB[x+1][y-1].White ^ CurrentWhite)){
+                        CoinClick[x+1][y-1] = 2;
+                    }
+                }else{
+                    // Single Step
+                    if(y+1 <8 && COB[x][y+1] == null){
+                        CoinClick[x][y+1] = 3;
+                    }
+                    // Double step
+                    if(y == 1 && COB[x][y+2] ==null){
+                        CoinClick[x][y+2] = 3;
+                    }
+                    // Diagonal Hits
+                    if(x-1 >=0 && y+1 <8 && COB[x-1][y+1] != null && !(COB[x-1][y+1].White && CurrentWhite)){
+                        CoinClick[x-1][y+1] = 2;
+                    }
+                    if(x+1 <8 && y+1 <8 && COB[x+1][y+1] != null && !(COB[x+1][y+1].White && CurrentWhite)){
+                        CoinClick[x+1][y+1] = 2;
                     }
                 }
             }

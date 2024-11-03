@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class coin {
     public boolean White;
-    private int X;
-    private int Y;
+    public int X;
+    public int Y;
     private int dX;
     private int dY;
     private Image coinImage;
@@ -21,12 +21,15 @@ public class coin {
         this.dY = dY;
         this.type = Type;
     }
-
-    public void ChangePos(int X,int Y){
-        this.X = X;
-        this.Y = Y;
+    public coin(coin other) {
+        this.White = other.White;
+        this.X = other.X;
+        this.Y = other.Y;
+        this.dX = other.dX;
+        this.dY = other.dY;
+        this.coinImage = other.coinImage; // Shallow copy, adjust if deep copy of Image is needed
+        this.type = new String(other.type); // Creates a new instance of the string
     }
-
     public void drawCoin(Graphics g){
         g.drawImage(coinImage, dX + ((X)*100), dY + ((Y)*100),100,100, null);
     }

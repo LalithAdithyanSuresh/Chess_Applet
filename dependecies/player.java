@@ -6,8 +6,8 @@ public class player {
     private String name;
     private boolean white;
     private int timeLeft;
-    private coin[] coinsWon;
-    private int coinWonCount;
+    public coin[] coinsWon;
+    public int coinWonCount;
     private clock Clock;
     private int posX, posY, height, width;
 
@@ -24,6 +24,7 @@ public class player {
         this.Clock = new clock(this.timeLeft, this.white, component, posX + (white ? width - 210 : 10), posY + (white ? height - 70 : 10));
         Clock.start();
     }
+
 
     // Printing Stats of the player in the assigned area
     public void PrintPlayer(Graphics g) {
