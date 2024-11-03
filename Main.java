@@ -19,6 +19,7 @@ public class Main extends JFrame implements MouseListener {
     private player Player1;
     private player Player2;
     private boolean CurrentWhite;
+    private boolean Start;
     private int[] choosenCords;
 
     public Main() {
@@ -39,6 +40,7 @@ public class Main extends JFrame implements MouseListener {
 
         COB = new coin[8][8];
         CoinClick = new int[8][8];
+        Start = false;
 
         // Initializing Coins
         COB[0][0] = new coin(false,0,0,pieces[5],0,250,"rook");
@@ -127,6 +129,12 @@ public class Main extends JFrame implements MouseListener {
         Player1.PrintPlayer(g);
         Player2.PrintPlayer(g);
         drawPieces(g);
+        if(!Start){
+            g.setColor(Color.GREEN);
+            g.fillRect(300, 600, 200, 100);
+            g.setColor(Color.BLACK);
+            g.drawString("START", 400 - g.getFontMetrics().stringWidth("START") / 2, 660);
+        }
     }
 
 
@@ -286,14 +294,186 @@ public class Main extends JFrame implements MouseListener {
                         CoinClick[x][y+2] = 3;
                     }
                     // Diagonal Hits
-                    if(x-1 >=0 && y+1 <8 && COB[x-1][y+1] != null && !(COB[x-1][y+1].White && CurrentWhite)){
+                    if(x-1 >=0 && y+1 <8 && COB[x-1][y+1] != null && (COB[x-1][y+1].White ^ CurrentWhite)){
                         CoinClick[x-1][y+1] = 2;
                     }
-                    if(x+1 <8 && y+1 <8 && COB[x+1][y+1] != null && !(COB[x+1][y+1].White && CurrentWhite)){
+                    if(x+1 <8 && y+1 <8 && COB[x+1][y+1] != null && (COB[x+1][y+1].White ^ CurrentWhite)){
                         CoinClick[x+1][y+1] = 2;
                     }
                 }
             }
+            // Bishop Movement
+            if(COB[x][y].type.equals("bishop")){
+                // TOP left
+                for(int i=1;i<8;i++){
+                    if(x-i >= 0 && y-i >= 0){
+                        if(COB[x-i][y-i] != null){
+                            if(COB[x-i][y-i].White ^ CurrentWhite){
+                                CoinClick[x-i][y-i] = 2;
+                                break;
+                            }else{
+                                break;
+                            }
+                        }
+                        CoinClick[x-i][y-i] = 3;
+                    }
+                }
+                // Top Right
+                for(int i=1;i<8;i++){
+                    if(x+i < 8 && y-i >= 0){
+                        if(COB[x+i][y-i] != null){
+                            if(COB[x+i][y-i].White ^ CurrentWhite){
+                                CoinClick[x+i][y-i] = 2;
+                                break;
+                            }else{
+                                break;
+                            }
+                        }
+                        CoinClick[x+i][y-i] = 3;
+                    }
+                }
+                // Bottom Left
+                for(int i=1;i<8;i++){
+                    if(x-i >= 0 && y+i < 8){
+                        if(COB[x-i][y+i] != null){
+                            if(COB[x-i][y+i].White ^ CurrentWhite){
+                                CoinClick[x-i][y+i] = 2;
+                                break;
+                            }else{
+                                break;
+                            }
+                        }
+                        CoinClick[x-i][y+i] = 3;
+                    }
+                }
+                // Bottom Right
+                for(int i=1;i<8;i++){
+                    if(x+i <8 && y+1 <8){
+                        if(COB[x+i][y+i] != null){
+                            if(COB[x+i][y+i].White ^ CurrentWhite){
+                                CoinClick[x+i][y+i] = 2;
+                                break;
+                            }else{
+                                break;
+                            }
+                        }
+                        CoinClick[x+i][y+i] = 3;
+                    }
+                }
+            }
+            // Queen Movement
+            if(COB[x][y].type.equals("queen")){
+                // Right Movement
+                for(int i=x+1;i<8;i++){
+                    if(COB[i][y] != null){
+                        if((COB[i][y].White ^ CurrentWhite)){
+                            CoinClick[i][y] = 2;
+                            break;
+                        }else {
+                            break;
+                        }
+                    }else{
+                        CoinClick[i][y] = 3;
+                    }
+                }
+                // Left Movement
+                for(int i=x-1;i>=0;i--){
+                    if(COB[i][y] != null){
+                        if((COB[i][y].White ^ CurrentWhite)){
+                            CoinClick[i][y] = 2;
+                            break;
+                        }else {
+                            break;
+                        }
+                    }else{
+                        CoinClick[i][y] = 3;
+                    }
+                }
+                // Up Movement
+                for(int i=y-1;i>=0;i--){
+                    if(COB[x][i] != null){
+                        if((COB[x][i].White ^ CurrentWhite)){
+                            CoinClick[x][i] = 2;
+                            break;
+                        }else {
+                            break;
+                        }
+                    }else{
+                        CoinClick[x][i] = 3;
+                    }
+                }
+                // Down Movment
+                for(int i=y+1;i<8;i++){
+                    if(COB[x][i] != null){
+                        if((COB[x][i].White ^ CurrentWhite)){
+                            CoinClick[x][i] = 2;
+                            break;
+                        }else {
+                            break;
+                        }
+                    }else{
+                        CoinClick[x][i] = 3;
+                    }
+                }
+                // TOP left
+                for(int i=1;i<8;i++){
+                    if(x-i >= 0 && y-i >= 0){
+                        if(COB[x-i][y-i] != null){
+                            if(COB[x-i][y-i].White ^ CurrentWhite){
+                                CoinClick[x-i][y-i] = 2;
+                                break;
+                            }else{
+                                break;
+                            }
+                        }
+                        CoinClick[x-i][y-i] = 3;
+                    }
+                }
+                // Top Right
+                for(int i=1;i<8;i++){
+                    if(x+i < 8 && y-i >= 0){
+                        if(COB[x+i][y-i] != null){
+                            if(COB[x+i][y-i].White ^ CurrentWhite){
+                                CoinClick[x+i][y-i] = 2;
+                                break;
+                            }else{
+                                break;
+                            }
+                        }
+                        CoinClick[x+i][y-i] = 3;
+                    }
+                }
+                // Bottom Left
+                for(int i=1;i<8;i++){
+                    if(x-i >= 0 && y+i < 8){
+                        if(COB[x-i][y+i] != null){
+                            if(COB[x-i][y+i].White ^ CurrentWhite){
+                                CoinClick[x-i][y+i] = 2;
+                                break;
+                            }else{
+                                break;
+                            }
+                        }
+                        CoinClick[x-i][y+i] = 3;
+                    }
+                }
+                // Bottom Right
+                for(int i=1;i<8;i++){
+                    if(x+i <8 && y+1 <8){
+                        if(COB[x+i][y+i] != null){
+                            if(COB[x+i][y+i].White ^ CurrentWhite){
+                                CoinClick[x+i][y+i] = 2;
+                                break;
+                            }else{
+                                break;
+                            }
+                        }
+                        CoinClick[x+i][y+i] = 3;
+                    }
+                }
+            }
+            // Knight Movement
+        
         }
     }
 
@@ -303,7 +483,14 @@ public class Main extends JFrame implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
-        CheckCoinClick(x, y);
+        if(Start){
+            CheckCoinClick(x, y);
+        }if(x>=300 && x<= 500 && y>=600 && y<=700){
+            Start = true;
+            Player2.Clock.start();
+            Player1.Clock.stop();
+            repaint();
+        }
         
     }
 

@@ -22,7 +22,6 @@ public class player {
         this.height = height;
         this.width = width;
         this.Clock = new clock(this.timeLeft, this.white, component, posX + (white ? width - 210 : 10), posY + (white ? height - 70 : 10));
-        Clock.start();
     }
 
 
